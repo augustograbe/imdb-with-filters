@@ -27,4 +27,5 @@ Configura para o seu banco de dados.
 No terminal na pasta ../imdb-django/
 execute: 
 > python manage.py makemigration
+
 > python manage.py migrate
