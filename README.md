@@ -3,12 +3,14 @@ Trabalho de banco de dados. DCC UFRJ 2022.1
 
 Para baixar django: 
 > pip install Django
+
 É necessário também
+
 > pip isntall mysqlclient
 
 Va no arquivo imdb/settings.py
 em
-'''
+```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -19,7 +21,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-'''
+```
 Configura para o seu banco de dados.
 
 No terminal na pasta ../imdb-django/
