@@ -5,11 +5,12 @@ Trabalho de banco de dados. DCC UFRJ 2022.1
 > IMDb_completo.sql
 
 no servidor mysql.
+(está no drive)
 
 
 ## Configurar Django
 
-Para baixar django: 
+Para baixar django:
 > pip install Django
 
 É necessário também
