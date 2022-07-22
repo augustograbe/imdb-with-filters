@@ -1,12 +1,12 @@
 # imdb-with-filters
 Trabalho de banco de dados. DCC UFRJ 2022.1
 
-##Configurar banco de dados
+## Configurar banco de dados
 > IMDb_completo.sql
 no servidor mysql.
 
 
-##Configurar Django
+## Configurar Django
 
 Para baixar django: 
 > pip install Django
