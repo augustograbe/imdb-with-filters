@@ -38,3 +38,7 @@ execute:
 > python manage.py makemigration
 
 > python manage.py migrate
+
+Para executar o projeto
+
+> python manage.py runserver
