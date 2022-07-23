@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'imdb_filmes'
+    'imdb_filmes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
