@@ -17,6 +17,7 @@ Para baixar django:
 É necessário também
 
 > pip install mysqlclient
+> pip install PyMySQL
 
 Va no arquivo imdb/settings.py
 em
