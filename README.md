@@ -6,6 +6,7 @@ Trabalho de banco de dados. DCC UFRJ 2022.1
 
 no servidor mysql.
 (está no drive)
+https://we.tl/t-DvwE4Utp0K
 
 
 ## Configurar Django
