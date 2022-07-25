@@ -8,7 +8,7 @@ urlpatterns = [
     path("rank_diretor", views.rank_diretor, name="rank_diretor"),
     path("rank_ator", views.rank_ator, name="rank_ator"),
     path("rank_roterista", views.rank_roterista, name="rank_roterista"),
-    path("filme/<str:entry>", views.filme, name="filme"),
+    path("filme/<str:filme_id>", views.filme, name="filme"),
     path("pessoa/<str:entry>", views.pessoa, name="pessoa"),
     path("pesquisa/", views.pesquisa, name="pesquisa"),
 ]

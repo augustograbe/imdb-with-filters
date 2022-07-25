@@ -16,15 +16,17 @@
             <a href="{% url 'rank_diretor' %}" id="menu">Diretores</a>
             <a href="{% url 'rank_ator' %}" id="menu">Atores</a>
             <a href="{% url 'rank_roterista' %}" id="menu">Roteristas</a>
-            <!-- Scarch  -->
             <div id='scarch'>
                 <input placeholder="Pesquisar">
                 <button type="submit"><img src="{% static 'imdb_filmes/lupa.svg' %}"></button>
             </div>
-            <!-- post scarch -->
             <div id="wlist"><img src="{% static 'imdb_filmes/favorito.svg' %}" id="wl-img">Favoritos</div>
             <div id="sin">Sign In</div>
         </nav>
+        <div id="corpo">
+            {% block body %}
+            {% endblock %}
+        </div>
     </body>
 </html>
 
