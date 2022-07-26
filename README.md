@@ -2,11 +2,10 @@
 Trabalho de banco de dados. DCC UFRJ 2022.1
 
 ## Configurar banco de dados
-> IMDb_completo.sql
-
-no servidor mysql.
-(está no drive)
+baixe
 https://we.tl/t-DvwE4Utp0K
+No Mysql execute o arquivo
+> IMDb_completo.sql
 
 
 ## Configurar Django
