@@ -2,11 +2,12 @@
 Trabalho de banco de dados. DCC UFRJ 2022.1
 
 ## Configurar banco de dados
-baixe
-https://we.tl/t-DvwE4Utp0K
-No Mysql execute o arquivo
-> IMDb_completo.sql
+Baixe IMDb_completo.sql 
 
+https://we.tl/t-DvwE4Utp0K
+
+Com um servidor Mysql já instalado execute o arquivo. Exemplo:
+> SOURCE C:\Users\augus\Desktop\TrabalhoIMDb\BancodeDados\IMDb_completo.sql
 
 ## Configurar Django
 
@@ -35,15 +36,10 @@ Configura para o seu banco de dados.
 
 No terminal na pasta ../imdb-django/
 execute: 
-> python manage.py makemigrations
-
-> python manage.py migrate
-
-Para executar o projeto
 
 > python manage.py runserver
 
 Starting development server at http... 
 
 Pare ir para o index:
-http://127.0.0.1:8000/imdb_filmes
+> http://127.0.0.1:8000/imdb_filmes
