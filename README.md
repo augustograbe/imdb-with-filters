@@ -10,6 +10,7 @@ Com um servidor Mysql já instalado execute o arquivo. Exemplo:
 > SOURCE C:\Users\augus\Desktop\TrabalhoIMDb\BancodeDados\IMDb_completo.sql
 
 ## Configurar Django
+Com o python já instalado:
 
 Para baixar django:
 > pip install Django
