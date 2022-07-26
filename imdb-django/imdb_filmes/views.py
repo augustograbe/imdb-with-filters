@@ -33,16 +33,29 @@ def rank_ator(request):
     return render(request, "imdb_filmes/rank_ator.html")
 
 def rank_roterista(request):
-    return render(request, "imdb_filmes/rank_roterista.html")
+    return render(request, "imdb_filmes/rank_roteirista.html")
 
 def filme(request, filme_id):
     cursor = connection.cursor()
-    cursor.execute(f"SELECT titulo_primario, titulo_original, lancamento, tempo FROM filme WHERE filme_id='{filme_id}'")
+    cursor.execute(f"SELECT filme_id, titulo_primario, titulo_original, lancamento, tempo FROM filme WHERE filme_id='{filme_id}'")
     filme = dictfetchall(cursor)
-    print(filme)
-    print(connection.queries)
+    cursor.execute(f"SELECT nota_media, num_votos FROM avaliacao WHERE filme_id='{filme_id}'")
+    avaliacao = dictfetchall(cursor)
+    cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, roterista WHERE pessoa.pessoa_id=roterista.pessoa_id AND filme_id='{filme_id}'")
+    roteiristas = dictfetchall(cursor)
+    cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, diretor WHERE pessoa.pessoa_id=diretor.pessoa_id AND filme_id='{filme_id}'")
+    diretores = dictfetchall(cursor)
+    cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, ator WHERE pessoa.pessoa_id=ator.pessoa_id AND filme_id='{filme_id}'")
+    atores = dictfetchall(cursor)
+    cursor.execute(f"SELECT genero FROM genero WHERE filme_id='{filme_id}'")
+    generos = dictfetchall(cursor)
     return render(request, "imdb_filmes/filme.html", {
-        "filme": filme
+        "filme": filme,
+        "avaliacao": avaliacao,
+        "roteiristas": roteiristas,
+        "diretores": diretores,
+        "atores": atores,
+        "generos": generos
     } )
 
 def pessoa(request, pessoa_id):

@@ -7,6 +7,49 @@
 {% block body %}
    <p>Titulo primário:{{ filme.0.titulo_primario}}</p> 
    <p>Titulo original:{{ filme.0.titulo_original}}</p> 
+   <p>Nota:{{ avaliacao.0.nota_media}} / {{ avaliacao.0.num_votos}}</p> 
    <p>Ano de lançamento:{{ filme.0.lancamento}}</p> 
-   <p>Tempo de filme:{{ filme.0.tempo}} minutos</p> 
+   <p>Tempo de filme:{{ filme.0.tempo}} minutos</p>
+   <p><a href="https://www.imdb.com/title/{{ filme.0.filme_id }}" target="_blank">Pagina IMDb</a></p>
+   <p>Generos:</p>
+    <ul>
+        {% for genero in generos %}
+            <li>
+                {{ genero.genero }}
+            </li>
+        {% endfor %}
+    </ul>
+   <p>Diretores:</p>
+    <ul>
+        {% for diretor in diretores %}
+            <li>
+                <a href="{% url 'pessoa' diretor.pessoa_id %}">
+                    {{ diretor.nome }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+   <p>Roteiristas:</p>
+    <ul>
+        {% for roteirista in roteiristas %}
+            <li>
+                <a href="{% url 'pessoa' roteirista.pessoa_id %}">
+                    {{ roteirista.nome }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Atores:</p>
+    <ul>
+        {% for ator in atores %}
+            <li>
+                <a href="{% url 'pessoa' ator.pessoa_id %}">
+                    {{ ator.nome }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+   
 {% endblock %}
