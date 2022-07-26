@@ -43,3 +43,8 @@ execute:
 Para executar o projeto
 
 > python manage.py runserver
+
+Starting development server at http... 
+
+Pare ir para o index:
+http://127.0.0.1:8000/imdb_filmes
