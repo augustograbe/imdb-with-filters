@@ -5,5 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    {{ filme.lancamento }}
+   <p>Titulo primário:{{ filme.0.titulo_primario}}</p> 
+   <p>Titulo original:{{ filme.0.titulo_original}}</p> 
+   <p>Ano de lançamento:{{ filme.0.lancamento}}</p> 
+   <p>Tempo de filme:{{ filme.0.tempo}} minutos</p> 
 {% endblock %}

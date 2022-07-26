@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    <ul>
-        {% for filme in filmes %}
-            <li>{{ filme.titulo_primario }}</li>
-        {% endfor %}
-    </ul>
+    <div id="lista">
+        <ol>
+            {% for filme in filmes %}
+                <li>
+                    <a href="{% url 'filme' filme.filme_id %}">
+                    {{ filme.titulo_primario }} - {{ filme.lancamento }} - {{ filme.nota_media }} - {{ filme.num_votos }} 
+                    </a>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div id="filtros">
+
+    </div>
 {% endblock %}
