@@ -19,6 +19,8 @@ Para baixar django:
 
 > pip install mysqlclient
 
+> pip install beautifulsoup4
+
 Va no arquivo imdb/settings.py
 em
 ```
