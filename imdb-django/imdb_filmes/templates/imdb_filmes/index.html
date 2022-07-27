@@ -5,18 +5,39 @@
 {% endblock %}
 
 {% block body %}
-    <div id="lista">
-        <ol>
-            {% for filme in filmes %}
-                <li>
-                    <a href="{% url 'filme' filme.filme_id %}">
-                    {{ filme.titulo_primario }} - {{ filme.lancamento }} - {{ filme.nota_media }} - {{ filme.num_votos }} 
-                    </a>
-                </li>
-            {% endfor %}
-        </ol>
-    </div>
-    <div id="filtros">
-
+    <div id="conteudo">
+        <div id="lista">
+            <h1>Melhores Filmes</h1>
+            <table div="table_rank">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Nota do IMDb </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Título</th>
+                        <th id="qtd_votos">/ Qtd de votos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for filme in filmes %}
+                    <tr>
+                        <td><img src="" width="45" height="67"></td>
+                        <td id="td_titulo">
+                            {{ filme.rank }}. <a href="{% url 'filme' filme.filme_id %}">{{ filme.titulo_primario }}</a> ({{ filme.lancamento }})
+                        </td>
+                        <td id="td_nota">
+                          <strong> {{ filme.nota_media }}</strong> <br> / {{ filme.num_votos }}
+                        </td>         
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="filtros">
+            Generos:
+        </div>
     </div>
 {% endblock %}

@@ -2,8 +2,23 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.db import connection
 
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+
 from .models import Filme, Pessoa, Titulo, Genero, Avaliacao, Ator, Diretor, Roterista, Elenco,  TrabalhouComo, ConhecidoPor
 # Create your views here.
+
+# Acha o link da imagem da capa do filme
+def imagem_capa(title_id):
+  title_url = f'https://www.imdb.com/title/{title_id}/'
+  html = urlopen(title_url)
+  bs = BeautifulSoup(html,"html.parser")
+  data = bs.find('div',{'class':'ipc-poster'})
+  poster_link = data.img['src']
+  return poster_link
+  
+
+
 
 #Tranformar os reultados das querys em dicionários
 def dictfetchall(cursor):
@@ -14,14 +29,20 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
+def rank_dict(dict):
+    i=1
+    for filme in dict:
+        filme['rank'] = i
+        i += 1
+    return dict
 
 
-
-# Paginas
+# --------------Paginas-----------------
 def index(request):
     cursor = connection.cursor()
     cursor.execute("SELECT filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao WHERE filme.filme_id = avaliacao.filme_id  ORDER BY nota_media  desc limit 250")
     filmes = dictfetchall(cursor)
+    filmes = rank_dict(filmes)
     return render(request, "imdb_filmes/index.html",{
         "filmes": filmes
     })
@@ -49,13 +70,15 @@ def filme(request, filme_id):
     atores = dictfetchall(cursor)
     cursor.execute(f"SELECT genero FROM genero WHERE filme_id='{filme_id}'")
     generos = dictfetchall(cursor)
+    capa = imagem_capa(filme_id)
     return render(request, "imdb_filmes/filme.html", {
         "filme": filme,
         "avaliacao": avaliacao,
         "roteiristas": roteiristas,
         "diretores": diretores,
         "atores": atores,
-        "generos": generos
+        "generos": generos,
+        "capa": capa
     } )
 
 def pessoa(request, pessoa_id):
