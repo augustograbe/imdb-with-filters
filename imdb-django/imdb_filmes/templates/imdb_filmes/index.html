@@ -1,4 +1,5 @@
 {% extends "imdb_filmes/layout.html" %}
+{% load static %}
 
 {% block title %}
     Melhores Filmes
@@ -6,9 +7,10 @@
 
 {% block body %}
     <div id="conteudo">
+
         <div id="lista">
             <h1>Melhores Filmes</h1>
-            <table div="table_rank">
+            <table class="table_rank">
                 <thead>
                     <tr>
                         <th></th>
@@ -36,8 +38,104 @@
                 </tbody>
             </table>
         </div>
+
+
+
         <div id="filtros">
-            Generos:
+            
+            <h1><img id="filtro_icon" src="{% static 'imdb_filmes/filtro.png' %}" width="35" height="42">Filtros</h1>
+
+            <form>
+                <p>Ano de lançamento:</p>
+                <div class="range_container">
+                    <div class="sliders_control">
+                       <input id="fromSlider" type="range" value="1912" min="1912" max="2022" name="fromSlider" oninput="this.form.fromInput.value=this.value" />
+                       <input id="toSlider" type="range" value="2022" min="1912" max="2022" name="toSlider" oninput="this.form.toInput.value=this.value"/>
+                    </div>
+                    <div class="form_control">
+                      <div class="form_control_container">
+                          Entre
+                          <input class="form_control_container__time__input" type="number" id="fromInput" value="1912" min="1912" max="2022" name="fromInput" oninput="this.form.fromSlider.value=this.value"/>
+                        </div>
+                        <div class="form_control_container">
+                           e 
+                          <input class="form_control_container__time__input" type="number" id="toInput" value="2022" min="1912" max="2022" name="toInput" oninput="this.form.toSlider.value=this.value"/>
+                        </div>
+                    </div>
+                </div>
+
+                <p>Generos:</p>
+                <table>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero1" value="acao">
+                        <label for="genero1"> Ação</label></td>
+                        <td><input type="checkbox" id="" name="genero2" value="aventura">
+                        <label for="genero2"> Aventura</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero3" value="animacao">
+                        <label for="genero3"> Animação</label></td>
+                        <td><input type="checkbox" id="" name="genero4" value="animacao">
+                        <label for="genero4"> Biografia</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero5" value="comedia">
+                        <label for="genero5"> Comédia</label></td>
+                        <td><input type="checkbox" id="" name="genero6" value="crime">
+                        <label for="genero6"> Crime</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero7" value="documentario">
+                        <label for="genero7"> Documentário</label></td>
+                        <td><input type="checkbox" id="" name="genero8" value="drama">
+                        <label for="genero8"> Drama</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero9" value="familia">
+                        <label for="genero9"> Família</label></td>
+                        <td><input type="checkbox" id="" name="genero10" value="fantasia">
+                        <label for="genero10"> Fantasia</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero11" value="horror">
+                        <label for="genero11"> Horror</label></td>
+                        <td><input type="checkbox" id="" name="genero12" value="historico">
+                        <label for="genero12"> Historico</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero13" value="misterio">
+                        <label for="genero13"> Mistério</label></td>
+                        <td><input type="checkbox" id="" name="genero14" value="romance">
+                        <label for="genero14"> Romance</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero15" value="cientifica">
+                        <label for="genero15"> Ficção cientifica</label></td>
+                        <td><input type="checkbox" id="" name="genero16" value="esporte">
+                        <label for="genero16"> Esporte</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero17" value="suspense">
+                        <label for="genero17"> Suspense</label></td>
+                        <td><input type="checkbox" id="" name="genero18" value="guerra">
+                        <label for="genero18"> Guerra</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="" name="genero19" value="faroeste">
+                        <label for="genero19"> Faroeste</label></td>
+                    </tr>
+                </table>
+                <p>Nota mínima: <input type="number" name="amountInput" min="0" max="10" value="0" oninput="this.form.amountRange.value=this.value" /></p>
+                <div id="slider_nota">
+                    <input type="range" name="amountRange" min="0" max="10" value="0" oninput="this.form.amountInput.value=this.value" />
+                </div>
+                
+            
+                <p>Quantidade mínima de votos:<input type="number" id="" value="30000" name="qtd_votos"></p>
+                
+                <br>
+                <input class="botao_filtro " type="submit" value="Filtrar filmes">
+            </form>
         </div>
     </div>
 {% endblock %}

@@ -1,3 +1,6 @@
+
+/*----------------layout-----------*/
+
 body {
     display: flex;
     position: absolute;
@@ -62,7 +65,7 @@ nav {
     width: 300px;
     margin-left: 10px;
 }
-input {
+nav input {
     display: flex;
     height: 20px;
     width: 100%;
@@ -112,15 +115,13 @@ button {
 
 } 
 
-/*------index-----*/
+/*-----------------index-----*/
 /*------rank------*/
 #lista {
     width: 667px;
     float: left;
-    background-color: transparent;
 }
 #conteudo {
-    background-color:blue;
     margin-top: 0;
     position: relative;
 }
@@ -140,11 +141,11 @@ th {
     text-align: left;
     vertical-align: bottom;
 }
-tbody tr:nth-child(odd){
+.table_rank tbody tr:nth-child(odd){
     background-color: #f6f6f5;
     border: #fff 1px solid;
 }
-tbody tr:nth-child(even){
+.table_rank tbody tr:nth-child(even){
     background-color: #fbfbfb;
     border: #fff 1px solid;
 }
@@ -168,5 +169,108 @@ tbody strong{
     float: right;
     width: 300px;
     position: relative;
-    background-color: orange;
 }
+#filtros h1{
+    margin-top: 80px;
+}
+/*------dual range---- */
+.range_container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+  
+  .sliders_control {
+    position: relative;
+    min-height: 20px;
+  }
+  
+  .form_control {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 15px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #C6C6C6;
+    cursor: pointer;
+  }
+  
+  input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 15px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #C6C6C6;
+    cursor: pointer;  
+  }
+  
+  input[type=range]::-webkit-slider-thumb:hover {
+    background: #f7f7f7;
+  }
+  
+  input[type=range]::-webkit-slider-thumb:active {
+    box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+  }
+  
+  input[type="number"] {
+    width: 80px;
+    height: 30px;
+    font-size: 17px;
+    border: none;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {  
+     opacity: 1;
+  }
+  
+  input[type="range"] {
+    -webkit-appearance: none; 
+    appearance: none;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    background-color: #C6C6C6;
+    pointer-events: none;
+  }
+  
+  #fromSlider {
+    height: 0;
+    z-index: 1;
+  }
+  /*--------------------------------*/
+  #slider_nota{
+    position: relative;
+    min-height: 20px;
+    width: 70%;
+  }
+  .botao_filtro {
+    
+    background: #808080;
+    color: white;
+    height: 40px;
+    width: 120px;
+    font: bold 15px arial,sans-serif;
+    text-shadow: none;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    }
+
+    .botao_filtro:hover {
+        background: rgb(59, 59, 59);
+        cursor: pointer;
+    }
+    #filtro_icon {
+        margin: -6px;
+    }
