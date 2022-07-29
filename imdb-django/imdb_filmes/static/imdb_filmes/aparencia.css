@@ -151,6 +151,8 @@ th {
 }
 #td_titulo{
     padding: 0 10px 0 0;
+    max-width: 505px;
+    min-width: 460px;
 }
 tbody strong{
     background: url(estrela.png) no-repeat 0 -80px;
@@ -160,6 +162,7 @@ tbody strong{
 #td_nota{
     text-align: center;
     font-size: 11px;
+    min-width: 93px;
 }
 #qtd_votos{
     font-size: 13px;

@@ -45,21 +45,21 @@
             
             <h1><img id="filtro_icon" src="{% static 'imdb_filmes/filtro.png' %}" width="35" height="42">Filtros</h1>
 
-            <form>
+            <form action="{% url 'index' %}" method="get">
                 <p>Ano de lançamento:</p>
                 <div class="range_container">
                     <div class="sliders_control">
-                       <input id="fromSlider" type="range" value="1912" min="1912" max="2022" name="fromSlider" oninput="this.form.fromInput.value=this.value" />
-                       <input id="toSlider" type="range" value="2022" min="1912" max="2022" name="toSlider" oninput="this.form.toInput.value=this.value"/>
+                       <input id="fromSlider" type="range" value="{{ filtros.from }}" min="1911" max="2022" name="fromSlider" oninput="this.form.fromInput.value=this.value" />
+                       <input id="toSlider" type="range" value="{{ filtros.to }}" min="1911" max="2022" name="toSlider" oninput="this.form.toInput.value=this.value"/>
                     </div>
                     <div class="form_control">
                       <div class="form_control_container">
                           Entre
-                          <input class="form_control_container__time__input" type="number" id="fromInput" value="1912" min="1912" max="2022" name="fromInput" oninput="this.form.fromSlider.value=this.value"/>
+                          <input class="form_control_container__time__input" type="number" id="fromInput" value="{{ filtros.from }}" min="1911" max="2022" name="fromInput" oninput="this.form.fromSlider.value=this.value"/>
                         </div>
                         <div class="form_control_container">
                            e 
-                          <input class="form_control_container__time__input" type="number" id="toInput" value="2022" min="1912" max="2022" name="toInput" oninput="this.form.toSlider.value=this.value"/>
+                          <input class="form_control_container__time__input" type="number" id="toInput" value="{{ filtros.to }}" min="1911" max="2022" name="toInput" oninput="this.form.toSlider.value=this.value"/>
                         </div>
                     </div>
                 </div>
@@ -67,71 +67,71 @@
                 <p>Generos:</p>
                 <table>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero1" value="acao">
-                        <label for="genero1"> Ação</label></td>
-                        <td><input type="checkbox" id="" name="genero2" value="aventura">
-                        <label for="genero2"> Aventura</label></td>
+                        <td><input type="checkbox" id="" name="acao" value="1" {{ filtros.acao }}>
+                        <label for="acao"> Ação</label></td>
+                        <td><input type="checkbox" id="" name="aventura" value="1" {{ filtros.aventura }}>
+                        <label for="aventura"> Aventura</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero3" value="animacao">
-                        <label for="genero3"> Animação</label></td>
-                        <td><input type="checkbox" id="" name="genero4" value="animacao">
-                        <label for="genero4"> Biografia</label></td>
+                        <td><input type="checkbox" id="" name="animacao" value="1"  {{ filtros.animacao }}>
+                        <label for="animacao"> Animação</label></td>
+                        <td><input type="checkbox" id="" name="biografia" value="1" {{ filtros.biografia }}>
+                        <label for="biografia"> Biografia</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero5" value="comedia">
-                        <label for="genero5"> Comédia</label></td>
-                        <td><input type="checkbox" id="" name="genero6" value="crime">
-                        <label for="genero6"> Crime</label></td>
+                        <td><input type="checkbox" id="" name="comedia" value="1" {{ filtros.comedia }}>
+                        <label for="comedia"> Comédia</label></td>
+                        <td><input type="checkbox" id="" name="crime" value="1" {{ filtros.crime }}>
+                        <label for="crime"> Crime</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero7" value="documentario">
-                        <label for="genero7"> Documentário</label></td>
-                        <td><input type="checkbox" id="" name="genero8" value="drama">
-                        <label for="genero8"> Drama</label></td>
+                        <td><input type="checkbox" id="" name="documentario" value="1" {{ filtros.documentario}}>
+                        <label for="documentario"> Documentário</label></td>
+                        <td><input type="checkbox" id="" name="drama" value="1" {{ filtros.drama }}>
+                        <label for="drama"> Drama</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero9" value="familia">
-                        <label for="genero9"> Família</label></td>
-                        <td><input type="checkbox" id="" name="genero10" value="fantasia">
-                        <label for="genero10"> Fantasia</label></td>
+                        <td><input type="checkbox" id="" name="familia" value="1" {{ filtros.familia }}>
+                        <label for="familia"> Família</label></td>
+                        <td><input type="checkbox" id="" name="fantasia" value="1" {{ filtros.fantasia }}>
+                        <label for="fantasia"> Fantasia</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero11" value="horror">
-                        <label for="genero11"> Horror</label></td>
-                        <td><input type="checkbox" id="" name="genero12" value="historico">
-                        <label for="genero12"> Historico</label></td>
+                        <td><input type="checkbox" id="" name="horror" value="1" {{ filtros.horror }}>
+                        <label for="horror"> Horror</label></td>
+                        <td><input type="checkbox" id="" name="historico" value="1" {{ filtros.historico }}>
+                        <label for="historico"> Historico</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero13" value="misterio">
-                        <label for="genero13"> Mistério</label></td>
-                        <td><input type="checkbox" id="" name="genero14" value="romance">
-                        <label for="genero14"> Romance</label></td>
+                        <td><input type="checkbox" id="" name="misterio" value="1" {{ filtros.misterio }}>
+                        <label for="misterio"> Mistério</label></td>
+                        <td><input type="checkbox" id="" name="romance" value="1" {{ filtros.romance }}>
+                        <label for="romance"> Romance</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero15" value="cientifica">
-                        <label for="genero15"> Ficção cientifica</label></td>
-                        <td><input type="checkbox" id="" name="genero16" value="esporte">
-                        <label for="genero16"> Esporte</label></td>
+                        <td><input type="checkbox" id="" name="cientifica" value="1" {{ filtros.cientifica }}>
+                        <label for="cientifica"> Ficção cientifica</label></td>
+                        <td><input type="checkbox" id="" name="esporte" value="1" {{ filtros.esporte }}>
+                        <label for="esporte"> Esporte</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero17" value="suspense">
-                        <label for="genero17"> Suspense</label></td>
-                        <td><input type="checkbox" id="" name="genero18" value="guerra">
-                        <label for="genero18"> Guerra</label></td>
+                        <td><input type="checkbox" id="" name="suspense" value="1" {{ filtros.suspense }}>
+                        <label for="suspense"> Suspense</label></td>
+                        <td><input type="checkbox" id="" name="guerra" value="1" {{ filtros.guerra }}>
+                        <label for="guerra"> Guerra</label></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" id="" name="genero19" value="faroeste">
-                        <label for="genero19"> Faroeste</label></td>
+                        <td><input type="checkbox" id="" name="faroeste" value="1" {{ filtros.faroeste }}>
+                        <label for="faroeste"> Faroeste</label></td>
                     </tr>
                 </table>
-                <p>Nota mínima: <input type="number" name="amountInput" min="0" max="10" value="0" oninput="this.form.amountRange.value=this.value" /></p>
+                <p>Nota mínima: <input type="number" name="notaInput" min="0" max="10" value="{{ filtros.nota }}" oninput="this.form.notaRange.value=this.value" /></p>
                 <div id="slider_nota">
-                    <input type="range" name="amountRange" min="0" max="10" value="0" oninput="this.form.amountInput.value=this.value" />
+                    <input type="range" name="notaRange" min="0" max="10" value="{{ filtros.nota }}" oninput="this.form.notaInput.value=this.value" />
                 </div>
                 
             
-                <p>Quantidade mínima de votos:<input type="number" id="" value="30000" name="qtd_votos"></p>
+                <p>Quantidade mínima de votos:<input type="number" id="" value="{{ filtros.votos }}" name="qtd_votos"></p>
                 
                 <br>
                 <input class="botao_filtro " type="submit" value="Filtrar filmes">

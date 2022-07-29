@@ -39,12 +39,89 @@ def rank_dict(dict):
 
 # --------------Paginas-----------------
 def index(request):
+    filtros = {}
+    query_from = request.GET.get("fromInput","")
+    filtros['from'] = query_from
+    query_to = request.GET.get("toInput","")
+    filtros['to'] = query_to
+    query_nota = request.GET.get("notaInput","")
+    filtros['nota'] = query_nota
+    query_votos = request.GET.get("qtd_votos","")
+    filtros['votos'] = query_votos
+
+    selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ORDER BY nota_media  desc limit 250")
+    #------------Generos--------------
+    
+    query = request.GET.get("acao","")
+    if query == "1":
+        filtros['acao'] = "checked"
+    query = request.GET.get("aventura","")
+    if query == "1":
+        filtros['aventura'] = "checked"
+    query = request.GET.get("animacao","")
+    if query == "1":
+        filtros['animacao'] = "checked"
+    query = request.GET.get("biografia","")
+    if query == "1":
+        filtros['biografia'] = "checked"
+    query = request.GET.get("comedia","")
+    if query == "1":
+        filtros['comedia'] = "checked"
+    query = request.GET.get("crime","")
+    if query == "1":
+        filtros['crime'] = "checked"
+    query = request.GET.get("crime","")
+    if query == "1":
+        filtros['crime'] = "checked"
+    query = request.GET.get("documentario","")
+    if query == "1":
+        filtros['documentario'] = "checked"
+    query = request.GET.get("drama","")
+    if query == "1":
+        filtros['drama'] = "checked"
+    query = request.GET.get("familia","")
+    if query == "1":
+        filtros['familia'] = "checked"
+    query = request.GET.get("fantasia","")
+    if query == "1":
+        filtros['fantasia'] = "checked"
+    query = request.GET.get("horror","")
+    if query == "1":
+        filtros['horror'] = "checked"
+    query = request.GET.get("historico","")
+    if query == "1":
+        filtros['historico'] = "checked"
+    query = request.GET.get("misterio","")
+    if query == "1":
+        filtros['misterio'] = "checked"
+    query = request.GET.get("romance","")
+    if query == "1":
+        filtros['romance'] = "checked"
+    query = request.GET.get("cientifica","")
+    if query == "1":
+        filtros['cientifica'] = "checked"
+    query = request.GET.get("esporte","")
+    if query == "1":
+        filtros['esporte'] = "checked"
+    query = request.GET.get("suspense","")
+    if query == "1":
+        filtros['suspense'] = "checked"
+    query = request.GET.get("guerra","")
+    if query == "1":
+        filtros['guerra'] = "checked"
+    query = request.GET.get("faroeste","")
+    if query == "1":
+        filtros['faroeste'] = "checked"
+    
+    
+
     cursor = connection.cursor()
-    cursor.execute("SELECT filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao WHERE filme.filme_id = avaliacao.filme_id  ORDER BY nota_media  desc limit 250")
+    cursor.execute(selecao)
     filmes = dictfetchall(cursor)
     filmes = rank_dict(filmes)
     return render(request, "imdb_filmes/index.html",{
-        "filmes": filmes
+        "filmes": filmes,
+        "filtros": filtros
     })
 
 def rank_diretor(request):
