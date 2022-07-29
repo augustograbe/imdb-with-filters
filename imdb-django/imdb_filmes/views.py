@@ -41,12 +41,17 @@ def rank_dict(dict):
 def index(request):
     filtros = {}
     query_from = request.GET.get("fromInput","")
+    if query_from == "": query_from = "1911"
+    print(f"")
     filtros['from'] = query_from
     query_to = request.GET.get("toInput","")
+    if query_to == "": query_to= "2022"
     filtros['to'] = query_to
     query_nota = request.GET.get("notaInput","")
+    if query_nota == "": query_nota= "0"
     filtros['nota'] = query_nota
     query_votos = request.GET.get("qtd_votos","")
+    if query_votos== "": query_votos = "30000"
     filtros['votos'] = query_votos
 
     selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ORDER BY nota_media  desc limit 250")
