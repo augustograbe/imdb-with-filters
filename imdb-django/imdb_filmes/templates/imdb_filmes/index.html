@@ -103,6 +103,12 @@
                         <label for="historico"> Historico</label></td>
                     </tr>
                     <tr>
+                        <td><input type="checkbox" id="" name="musical" value="1" {{ filtros.musical }}>
+                        <label for="musical"> Musical</label></td>
+                        <td><input type="checkbox" id="" name="musica" value="1" {{ filtros.musica }}>
+                        <label for="musica"> Musica</label></td>
+                    </tr>
+                    <tr>
                         <td><input type="checkbox" id="" name="misterio" value="1" {{ filtros.misterio }}>
                         <label for="misterio"> Mistério</label></td>
                         <td><input type="checkbox" id="" name="romance" value="1" {{ filtros.romance }}>
@@ -131,7 +137,7 @@
                 </div>
                 
             
-                <p>Quantidade mínima de votos:<input type="number" id="" value="{{ filtros.votos }}" name="qtd_votos"></p>
+                <p>Quantidade mínima de votos:<input type="number" id="" min="1000" value="{{ filtros.votos }}" name="qtd_votos"></p>
                 
                 <br>
                 <input class="botao_filtro " type="submit" value="Filtrar filmes">

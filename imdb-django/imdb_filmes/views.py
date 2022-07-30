@@ -42,7 +42,6 @@ def index(request):
     filtros = {}
     query_from = request.GET.get("fromInput","")
     if query_from == "": query_from = "1911"
-    print(f"")
     filtros['from'] = query_from
     query_to = request.GET.get("toInput","")
     if query_to == "": query_to= "2022"
@@ -54,71 +53,96 @@ def index(request):
     if query_votos== "": query_votos = "30000"
     filtros['votos'] = query_votos
 
-    selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ORDER BY nota_media  desc limit 250")
-    #------------Generos--------------
+    selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ")
     
+    #------------Generos--------------
+    selecao += ("AND genero IN (''")
     query = request.GET.get("acao","")
     if query == "1":
         filtros['acao'] = "checked"
+        selecao += (",'Action'")
     query = request.GET.get("aventura","")
     if query == "1":
         filtros['aventura'] = "checked"
+        selecao += (",'Adventure'")
     query = request.GET.get("animacao","")
     if query == "1":
         filtros['animacao'] = "checked"
+        selecao += (",'Animation'")
     query = request.GET.get("biografia","")
     if query == "1":
         filtros['biografia'] = "checked"
+        selecao += (",'Biography'")
     query = request.GET.get("comedia","")
     if query == "1":
         filtros['comedia'] = "checked"
+        selecao += (",'Comedy'")
     query = request.GET.get("crime","")
     if query == "1":
         filtros['crime'] = "checked"
-    query = request.GET.get("crime","")
-    if query == "1":
-        filtros['crime'] = "checked"
+        selecao += (",'Crime'")
     query = request.GET.get("documentario","")
     if query == "1":
         filtros['documentario'] = "checked"
+        selecao += (",'Documentary'")
     query = request.GET.get("drama","")
     if query == "1":
         filtros['drama'] = "checked"
+        selecao += (",'Drama'")
     query = request.GET.get("familia","")
     if query == "1":
         filtros['familia'] = "checked"
+        selecao += (",'Family'")
     query = request.GET.get("fantasia","")
     if query == "1":
         filtros['fantasia'] = "checked"
+        selecao += (",'Fantasy'")
     query = request.GET.get("horror","")
     if query == "1":
         filtros['horror'] = "checked"
+        selecao += (",'Horror'")
     query = request.GET.get("historico","")
     if query == "1":
         filtros['historico'] = "checked"
+        selecao += (",'History'")
+    query = request.GET.get("musical","")
+    if query == "1":
+        filtros['musical'] = "checked"
+        selecao += (",'Musical'")
+    query = request.GET.get("musica","")
+    if query == "1":
+        filtros['musica'] = "checked"
+        selecao += (",'Music'")
     query = request.GET.get("misterio","")
     if query == "1":
         filtros['misterio'] = "checked"
+        selecao += (",'Mystery'")
     query = request.GET.get("romance","")
     if query == "1":
         filtros['romance'] = "checked"
+        selecao += (",'Romance'")
     query = request.GET.get("cientifica","")
     if query == "1":
         filtros['cientifica'] = "checked"
+        selecao += (",'Sci-Fi'")
     query = request.GET.get("esporte","")
     if query == "1":
         filtros['esporte'] = "checked"
+        selecao += (",'Sport'")
     query = request.GET.get("suspense","")
     if query == "1":
         filtros['suspense'] = "checked"
+        selecao += (",'Thriller'")
     query = request.GET.get("guerra","")
     if query == "1":
         filtros['guerra'] = "checked"
+        selecao += (",'War'")
     query = request.GET.get("faroeste","")
     if query == "1":
         filtros['faroeste'] = "checked"
+        selecao += (",'Western'")
     
-    
+    selecao += (") ORDER BY nota_media  desc limit 250")
 
     cursor = connection.cursor()
     cursor.execute(selecao)
@@ -130,7 +154,17 @@ def index(request):
     })
 
 def rank_diretor(request):
-    return render(request, "imdb_filmes/rank_diretor.html")
+    filtros = {}
+    selecao =  ("SELECT nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes FROM (SELECT nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes FROM pessoa NATURAL JOIN diretor NATURAL JOIN avaliacao WHERE num_votos > 30000 GROUP BY nome) AS result WHERE num_filmes > 2 ORDER BY nota_ponderada desc LIMIT 250")
+
+    cursor = connection.cursor()
+    cursor.execute(selecao)
+    diretores = dictfetchall(cursor)
+    diretores = rank_dict(diretores)
+    return render(request, "imdb_filmes/rank_diretor.html",{
+        "diretores": diretores,
+        "filtros": filtros
+    })
 
 def rank_ator(request):
     return render(request, "imdb_filmes/rank_ator.html")

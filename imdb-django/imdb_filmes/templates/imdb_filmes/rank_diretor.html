@@ -5,5 +5,48 @@
 {% endblock %}
 
 {% block body %}
+<div id="conteudo">
 
+    <div id="lista">
+        <h1>Melhores Diretores</h1>
+        <table class="table_rank">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Qtd de filmes</th>
+                    <th>Nota do IMDb </th>
+                    <th>Média</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Nome</th>
+                    <th>no TOP250</th>
+                    <th>Nota Média</th>
+                    <th>Ponderada</th>
+                    <th>Filmes</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for diretor in diretores %}
+                <tr>
+                    <td>
+                        {{ diretor.rank }}. <a href="">{{ diretor.nome }}</a>
+                    </td>
+                    <td>
+                      {{ diretor. }}
+                    </td>
+                    <td  id="td_nota">
+                        <strong> {{ diretor.media }}</strong> 
+                    </td>
+                    <td  id="td_nota">
+                        <strong>{{ diretor.ponderada }}</strong>
+                    <td>
+                        {{ diretor.num_filmes}}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
