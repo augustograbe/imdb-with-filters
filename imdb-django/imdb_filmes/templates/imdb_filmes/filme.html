@@ -6,52 +6,99 @@
 {% endblock %}
 
 {% block body %}
-   <img src="{{ capa }}">
-   <p>Titulo primário:{{ filme.0.titulo_primario}}</p> 
-   <p>Titulo original:{{ filme.0.titulo_original}}</p> 
-   <p>Nota:{{ avaliacao.0.nota_media}} / {{ avaliacao.0.num_votos}}</p> 
-   <p>Ano de lançamento:{{ filme.0.lancamento}}</p> 
-   <p>Tempo de filme:{{ filme.0.tempo}} minutos</p>
-   <p><a href="https://www.imdb.com/title/{{ filme.0.filme_id }}" target="_blank">Pagina IMDb</a></p>
-   <p>Generos:</p>
-    <ul>
-        {% for genero in generos %}
-            <li>
-                {{ genero.genero }}
-            </li>
-        {% endfor %}
-    </ul>
-   <p>Diretores:</p>
-    <ul>
-        {% for diretor in diretores %}
-            <li>
-                <a href="{% url 'pessoa' diretor.pessoa_id %}">
-                    {{ diretor.nome }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-   <p>Roteiristas:</p>
-    <ul>
-        {% for roteirista in roteiristas %}
-            <li>
-                <a href="{% url 'pessoa' roteirista.pessoa_id %}">
-                    {{ roteirista.nome }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-    <p>Atores:</p>
-    <ul>
-        {% for ator in atores %}
-            <li>
-                <a href="{% url 'pessoa' ator.pessoa_id %}">
-                    {{ ator.nome }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="filme-background">
+        <div class="filme-titulo">
+            <div class="filme-titulo-image">
+                <img src="{{ capa }}">
+            </div>
 
+            <div class="filme-titulo-infos">
+                <div class="filme-titulo-primario">
+                    <p>{{ filme.0.titulo_primario}}</p> 
+                </div>
+
+                <div class="filme-titulo-secundario">
+                    <p>{{ filme.0.titulo_original}}</p> 
+                </div>
+
+                <div class="filme-titulo-infos-adicionais">
+                    <p>{{ filme.0.lancamento}}</p> 
+                    <p>{{ filme.0.tempo}} minutos</p>
+                    <div class="avaliacao">
+                        <div class="avaliacao-titulo">AVALIAÇÃO DA IMDb</div>
+
+                        <div class="avaliacao-corpo">
+                            <div class="avaliacao-star">
+                                <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
+                            </div>
+                            <div class="avaliacao-valores" >
+                                <div class="avaliacao-valores-nota"><p><b>{{ avaliacao.0.nota_media}}</b>/10 </p> </div>
+                                <div class="avaliacao-valores-votos"><p>{{ avaliacao.0.num_votos}}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="botao-ver-imdb">
+                        <a href="https://www.imdb.com/title/{{ filme.0.filme_id }}">
+                            <img src="/imdb-django/imdb_filmes/static/imdb_filmes/imdb-logo.png"/>
+                        </a>
+                    </div>
+                </div>
+                
+        </div>
+            
+        </div>
+
+        <div class="filme-corpo">
+                <ul class="filme-corpo-generos">
+                    {% for genero in generos %}
+                        <li class="filme-corpo-genero"><b>
+                            {{ genero.genero }}
+                        </b>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="filme-corpo-titulos">
+                    <b>Diretores:</b>
+                    <ul>
+                        {% for diretor in diretores %}
+                            <li>
+                                <a href="{% url 'pessoa' diretor.pessoa_id %}" class="filme-corpo-links">
+                                    {{ diretor.nome }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="filme-corpo-titulos">
+                    <p><b>Roteiristas:</b></p>
+                    <ul>
+                        {% for roteirista in roteiristas %}
+                            <li>
+                                <a href="{% url 'pessoa' roteirista.pessoa_id %}" class="filme-corpo-links">
+                                    {{ roteirista.nome }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div class="filme-corpo-titulos">
+                    <p><b>Atores:</b></p>
+                    <ul>
+                        {% for ator in atores %}
+                            <li>
+                                <a href="{% url 'pessoa' ator.pessoa_id %}" class="filme-corpo-links">
+                                    {{ ator.nome }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+        </div>
+</div>
 
    
 {% endblock %}
