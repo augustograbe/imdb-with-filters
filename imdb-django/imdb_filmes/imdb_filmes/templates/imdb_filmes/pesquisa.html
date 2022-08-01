@@ -1,0 +1,20 @@
+{% extends "imdb_filmes/layout.html" %}
+
+{% block title %}
+    Pesquisa
+{% endblock %}
+
+{% block body %}
+<h1>Pessoas:</h1>
+{% for pessoa in pessoas %}
+    <ul>
+        <td><a href="{% url 'pessoa' pessoa.pessoa_id %}">{{pessoa.nome}}</a></td>
+    </ul>
+{% endfor %}
+<h1>Filmes:</h1>
+{% for filme in filmes %}
+    <ul>
+        <td><a href="{% url 'filme' filme.filme_id %}">{{filme.titulo_primario}}</a></td>
+    </ul>
+{% endfor %}
+{% endblock %}

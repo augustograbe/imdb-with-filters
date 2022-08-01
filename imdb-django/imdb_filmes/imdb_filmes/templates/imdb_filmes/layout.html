@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link href="{% static 'imdb_filmes/aparencia.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <nav>
+            <img src="{% static 'imdb_filmes/logo.png' %}"' alt='imdb' id='imdb'>
+            <a href="{% url 'index' %}" id="menu">Filmes</a>
+            <a href="{% url 'rank_diretor' %}" id="menu">Diretores</a>
+            <a href="{% url 'rank_ator' %}" id="menu">Atores</a>
+            <a href="{% url 'rank_roteirista' %}" id="menu">Roteiristas</a>
+            <form action="{% url 'pesquisa' %}">
+            <div id='scarch'>
+                    <input  type="text" name="q" placeholder="Pesquisar">
+                    <button type="submit"><img src="{% static 'imdb_filmes/lupa.svg' %}"></button>
+            </div>
+            </form>
+            <div id="wlist"><img src="{% static 'imdb_filmes/favorito.svg' %}" id="wl-img">Favoritos</div>
+            <div id="sin">Sign In</div>
+        </nav>
+        <div id="corpo">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
+
+
+
+
+
+            
+
+
+                
