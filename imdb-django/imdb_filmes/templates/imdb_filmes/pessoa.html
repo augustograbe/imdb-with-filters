@@ -5,53 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="filme-background">
-    <div class="pessoa-titulo">
-        <div class="filme-titulo-image">
-            <img src="{{ capa }}">
-        </div>
-
-        <div class="pessoa-titulo-infos">
-            <div class="pessoa-titulo-primario">
-                <p>{{ pessoa.0.nome}}</p>
-            </div>
-
-            <div class="pessoa-info">
-                <div class="pessoa-info-data">
-                    <div class="pessoa-info-data-img">
-                        <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
-                    </div>
-                    <div class="pessoa-info-data-text">
-                        <p>{{ pessoa.0.nascimento}}</p> 
-                    </div>
-                </div>
-                <div class="pessoa-info-data">
-                    <div class="pessoa-info-data-img">
-                        <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
-                    </div>
-                    <div class="pessoa-info-data-text">
-                        <p>{{ pessoa.0.morte}}</p> 
-                    </div>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    </div>
-
-    <p>Filmes relacionados:</p>
-    <section class="slider">
-        <input name='slide' type="radio" >
-        <input name='slide' type="radio" checked>
-        <input name='slide' type="radio">
-        <input name='slide' type="radio">
-    
-        <div class="slider-content">
-            <div class="slider-item">
-                <img src="{{ capa }}">
-            </div>
-        </div>
-    </section>
-</div>
-    
+    <p>Nome:{{ pessoa.0.nome}}</p>
+    <p>Nascimento:{{ pessoa.0.nascimento}}</p> 
+    <p>Morte:{{ pessoa.0.morte}}</p> 
 {% endblock %}
