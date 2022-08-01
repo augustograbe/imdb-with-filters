@@ -448,3 +448,100 @@ tbody strong{
     .filme-corpo-titulos{
         margin-left: 20px;
     }
+
+
+    .pessoa-info{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pessoa-info-data{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+    }
+
+    .pessoa-info-data-text{
+        display: flex;
+        color: #f3ce13;
+        justify-content: center;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        font-style: italic;
+        font-size: 15px;
+        align-items: center; 
+    }
+
+    .pessoa-info-data-img{
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        width: 20px;
+        height: 20px;
+        background-color: #ae1515;
+        margin-right: 10px;
+    }
+
+    .pessoa-titulo-infos{
+        display: flex;
+        flex-direction: column;
+        width: 850px;
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pessoa-titulo-primario{
+        display: flex;
+        color: #f3ce13;
+        justify-content: center;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 35px;
+        align-items: center;
+    }
+
+    .pessoa-titulo{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        background-color:#141414;
+        padding: 7px;
+        position: relative;
+        align-items: center;
+    }
+
+
+.slider{
+    overflow: hidden;
+
+}
+.slider > .slider-content{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    transition: all 500ms ease;
+
+}
+
+.slider > .slider-content > .slider-item {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.slider > input:nth-child(1):checked ~ .slider-content{
+    transform: translateX(0%);
+}
+
+.slider > input:nth-child(2):checked ~ .slider-content{
+    transform: translateX(-100%);
+}
+.slider > input:nth-child(3):checked ~ .slider-content{
+    transform: translateX(-200%);
+}
+
+.slider > input:nth-child(4):checked ~ .slider-content{
+    transform: translateX(-300%);
+} 
