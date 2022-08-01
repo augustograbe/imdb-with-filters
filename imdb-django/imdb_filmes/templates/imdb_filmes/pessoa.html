@@ -1,4 +1,5 @@
 {% extends "imdb_filmes/layout.html" %}
+{% load static %}
 
 {% block title %}
     {{ title }}
@@ -19,7 +20,7 @@
             <div class="pessoa-info">
                 <div class="pessoa-info-data">
                     <div class="pessoa-info-data-img">
-                        <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
+                        <img src="{% static 'imdb_filmes/white-star.png' %}" alt='icon' id='icon'>
                     </div>
                     <div class="pessoa-info-data-text">
                         <p>{{ pessoa.0.nascimento}}</p> 
@@ -27,7 +28,7 @@
                 </div>
                 <div class="pessoa-info-data">
                     <div class="pessoa-info-data-img">
-                        <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
+                        <img src="{% static 'imdb_filmes/cruz-branca.png' %}" alt='icon' id='icon'>
                     </div>
                     <div class="pessoa-info-data-text">
                         <p>{{ pessoa.0.morte}}</p> 

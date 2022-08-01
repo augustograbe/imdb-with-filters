@@ -372,7 +372,6 @@ tbody strong{
 
     .avaliacao-star{
         display: flex;
-        background-color: #91e8b5;
         width: 40px;
         height: 40px;
         margin-right: 15px;
@@ -402,7 +401,6 @@ tbody strong{
     }
 
     .botao-ver-imdb{
-        background-color: #ae1515;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -449,6 +447,18 @@ tbody strong{
         margin-left: 20px;
     }
 
+    #star {
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+    }
+
+    #logo {
+        margin-top: 10px;
+        height: 50px;
+        width: 100px;
+        cursor: pointer;
+    }
 
     .pessoa-info{
         display: flex;
@@ -481,7 +491,6 @@ tbody strong{
         align-items: center; 
         width: 20px;
         height: 20px;
-        background-color: #ae1515;
         margin-right: 10px;
     }
 
@@ -511,6 +520,12 @@ tbody strong{
         padding: 7px;
         position: relative;
         align-items: center;
+    }
+
+    #icon {
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
     }
 
 
