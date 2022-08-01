@@ -30,7 +30,7 @@
 
                         <div class="avaliacao-corpo">
                             <div class="avaliacao-star">
-                                <img src="/imdb-django/imdb_filmes/static/imdb_filmes/star.png">
+                                <img src="{% static 'imdb_filmes/star.png' %}" alt='imdb' id='imdb'>
                             </div>
                             <div class="avaliacao-valores" >
                                 <div class="avaliacao-valores-nota"><p><b>{{ avaliacao.0.nota_media}}</b>/10 </p> </div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="botao-ver-imdb">
                         <a href="https://www.imdb.com/title/{{ filme.0.filme_id }}">
-                            <img src="/imdb-django/imdb_filmes/static/imdb_filmes/imdb-logo.png"/>
+                            <img src="{% static 'imdb_filmes/imdb-logo.png' %}" alt='imdb' id='imdb'>
                         </a>
                     </div>
                 </div>
