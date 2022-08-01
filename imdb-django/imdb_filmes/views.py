@@ -50,7 +50,7 @@ def index(request):
     if query_nota == "": query_nota= "0"
     filtros['nota'] = query_nota
     query_votos = request.GET.get("qtd_votos","")
-    if query_votos== "": query_votos = "30000"
+    if query_votos== "": query_votos = "50000"
     filtros['votos'] = query_votos
 
     selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ")
@@ -58,27 +58,27 @@ def index(request):
     #------------Generos--------------
     selecao += ("AND genero IN (''")
     query = request.GET.get("acao","")
-    if query == "1":
+    if query != "0":
         filtros['acao'] = "checked"
         selecao += (",'Action'")
     query = request.GET.get("aventura","")
-    if query == "1":
+    if query != "0":
         filtros['aventura'] = "checked"
         selecao += (",'Adventure'")
     query = request.GET.get("animacao","")
-    if query == "1":
+    if query != "0":
         filtros['animacao'] = "checked"
         selecao += (",'Animation'")
     query = request.GET.get("biografia","")
-    if query == "1":
+    if query != "0":
         filtros['biografia'] = "checked"
         selecao += (",'Biography'")
     query = request.GET.get("comedia","")
-    if query == "1":
+    if query != "0":
         filtros['comedia'] = "checked"
         selecao += (",'Comedy'")
     query = request.GET.get("crime","")
-    if query == "1":
+    if query != "0":
         filtros['crime'] = "checked"
         selecao += (",'Crime'")
     query = request.GET.get("documentario","")
@@ -86,59 +86,59 @@ def index(request):
         filtros['documentario'] = "checked"
         selecao += (",'Documentary'")
     query = request.GET.get("drama","")
-    if query == "1":
+    if query != "0":
         filtros['drama'] = "checked"
         selecao += (",'Drama'")
     query = request.GET.get("familia","")
-    if query == "1":
+    if query != "0":
         filtros['familia'] = "checked"
         selecao += (",'Family'")
     query = request.GET.get("fantasia","")
-    if query == "1":
+    if query != "0":
         filtros['fantasia'] = "checked"
         selecao += (",'Fantasy'")
     query = request.GET.get("horror","")
-    if query == "1":
+    if query != "0":
         filtros['horror'] = "checked"
         selecao += (",'Horror'")
     query = request.GET.get("historico","")
-    if query == "1":
+    if query != "0":
         filtros['historico'] = "checked"
         selecao += (",'History'")
     query = request.GET.get("musical","")
-    if query == "1":
+    if query != "0":
         filtros['musical'] = "checked"
         selecao += (",'Musical'")
     query = request.GET.get("musica","")
-    if query == "1":
+    if query != "0":
         filtros['musica'] = "checked"
         selecao += (",'Music'")
     query = request.GET.get("misterio","")
-    if query == "1":
+    if query != "0":
         filtros['misterio'] = "checked"
         selecao += (",'Mystery'")
     query = request.GET.get("romance","")
-    if query == "1":
+    if query != "0":
         filtros['romance'] = "checked"
         selecao += (",'Romance'")
     query = request.GET.get("cientifica","")
-    if query == "1":
+    if query != "0":
         filtros['cientifica'] = "checked"
         selecao += (",'Sci-Fi'")
     query = request.GET.get("esporte","")
-    if query == "1":
+    if query != "0":
         filtros['esporte'] = "checked"
         selecao += (",'Sport'")
     query = request.GET.get("suspense","")
-    if query == "1":
+    if query != "0":
         filtros['suspense'] = "checked"
         selecao += (",'Thriller'")
     query = request.GET.get("guerra","")
-    if query == "1":
+    if query != "0":
         filtros['guerra'] = "checked"
         selecao += (",'War'")
     query = request.GET.get("faroeste","")
-    if query == "1":
+    if query != "0":
         filtros['faroeste'] = "checked"
         selecao += (",'Western'")
     
