@@ -1,4 +1,6 @@
 {% extends "imdb_filmes/layout.html" %}
+{% load static %}
+
 
 {% block title %}
     Pesquisa
@@ -6,15 +8,30 @@
 
 {% block body %}
 <h1>Pessoas:</h1>
-{% for pessoa in pessoas %}
+
+<div class="cards">
+    {% for pessoa in pessoas %}
     <ul>
-        <td><a href="{% url 'pessoa' pessoa.pessoa_id %}">{{pessoa.nome}}</a></td>
+    <div class="card">
+        <img  src="https:" alt="card" id="image">
+        <div class="fraseCard">
+            <a href="{% url 'pessoa' pessoa.pessoa_id %}">{{pessoa.nome}}</a>
+        </div>
+    </div>
     </ul>
-{% endfor %}
+    {% endfor %}
+</div>
+
 <h1>Filmes:</h1>
-{% for filme in filmes %}
+<div class="cards">
+    {% for filme in filmes %}
     <ul>
-        <td><a href="{% url 'filme' filme.filme_id %}">{{filme.titulo_primario}}</a></td>
+        <div class="card">
+            <img  src="https" alt="card" id="image">
+            <div class="fraseCard">
+                <a href="{% url 'filme' filme.filme_id %}">{{filme.titulo_primario}}</a>
+            </div>
+        </div>
     </ul>
 {% endfor %}
 {% endblock %}
