@@ -24,7 +24,7 @@
             <tbody>
             {% for diretor in diretores %}
                 <tr>
-                    <td><img src="" width="45" height="67"></td>
+                    <td><img src="{{ diretor.url }}" width="45" height="67"></td>
                     <td>
                         {{ diretor.rank }}. <a href="{% url 'pessoa' diretor.pessoa_id %}">{{ diretor.nome }}</a>
                     </td>

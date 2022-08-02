@@ -53,7 +53,7 @@ def index(request):
     if query_votos== "": query_votos = "50000"
     filtros['votos'] = query_votos
 
-    selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos FROM filme, avaliacao, genero WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ")
+    selecao = (f"SELECT distinct filme.filme_id, titulo_primario, lancamento, nota_media, num_votos, url FROM filme, avaliacao, genero, capa WHERE filme.filme_id = avaliacao.filme_id  AND filme.filme_id=genero.filme_id AND filme.filme_id=capa.filme_id AND lancamento BETWEEN {query_from} AND {query_to} AND num_votos > {query_votos} AND nota_media > {query_nota} ")
     
     #------------Generos--------------
     selecao += ("AND genero IN (''")
@@ -179,7 +179,7 @@ def rank_diretor(request):
         rankear = ("num_filmes")
         filtros['selected'] = "qtd_filmes"
 
-    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250 FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250 FROM pessoa NATURAL JOIN diretor NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
+    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250, url FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250, url FROM pessoa NATURAL JOIN diretor NATURAL JOIN foto NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
 
     cursor = connection.cursor()
     cursor.execute(selecao)
@@ -216,7 +216,7 @@ def rank_ator(request):
         rankear = ("num_filmes")
         filtros['selected'] = "qtd_filmes"
 
-    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250 FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250 FROM pessoa NATURAL JOIN ator NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
+    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250, url FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250, url FROM pessoa NATURAL JOIN ator NATURAL JOIN foto NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
 
     cursor = connection.cursor()
     cursor.execute(selecao)
@@ -253,7 +253,7 @@ def rank_roterista(request):
         rankear = ("num_filmes")
         filtros['selected'] = "qtd_filmes"
 
-    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250 FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250 FROM pessoa NATURAL JOIN roterista NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
+    selecao =  (f"SELECT pessoa_id, nome, ROUND(nota_media, 1) as media, ROUND(nota_ponderada, 1) as ponderada, num_filmes, num_top250, url FROM (SELECT pessoa_id, nome, AVG(nota_media) AS nota_media, SUM(nota_media * num_votos) / SUM(num_votos) AS nota_ponderada, COUNT(DISTINCT filme_id) AS num_filmes, COUNT(nm) AS num_top250, url FROM pessoa NATURAL JOIN roterista NATURAL JOIN foto NATURAL JOIN avaliacao NATURAL LEFT JOIN (SELECT filme_id, nota_media AS nm FROM TOP250) AS top250filmes WHERE num_votos > {query_votos} {query_vivo}GROUP BY nome) AS resultado WHERE num_filmes > {query_qtd_dirigidos} ORDER BY {rankear} DESC")
 
     cursor = connection.cursor()
     cursor.execute(selecao)
@@ -278,7 +278,8 @@ def filme(request, filme_id):
     atores = dictfetchall(cursor)
     cursor.execute(f"SELECT genero FROM genero WHERE filme_id='{filme_id}'")
     generos = dictfetchall(cursor)
-    capa = imagem_capa(filme_id)
+    cursor.execute(f"SELECT url FROM capa WHERE filme_id='{filme_id}'")
+    capa = dictfetchall(cursor)
     return render(request, "imdb_filmes/filme.html", {
         "filme": filme,
         "avaliacao": avaliacao,
@@ -293,16 +294,19 @@ def pessoa(request, pessoa_id):
     cursor = connection.cursor()
     cursor.execute(f"SELECT nome, nascimento, morte from pessoa WHERE pessoa_id='{pessoa_id}'")
     pessoa = dictfetchall(cursor)
+    cursor.execute(f"SELECT url from foto WHERE pessoa_id='{pessoa_id}'")
+    foto = dictfetchall(cursor)
     return render(request, "imdb_filmes/pessoa.html", {
-        "pessoa": pessoa
+        "pessoa": pessoa,
+        "foto": foto
     } )
 
 def pesquisa(request):
         query = request.GET.get("q", "")
         cursor = connection.cursor()
-        cursor.execute(f"SELECT distinct pessoa_id, nome from pessoa WHERE MATCH (nome) AGAINST ('{query}')")
+        cursor.execute(f"SELECT distinct pessoa.pessoa_id, nome, url from pessoa, foto WHERE pessoa.pessoa_id=foto.pessoa_id AND MATCH (nome) AGAINST ('{query}')")
         pessoas = dictfetchall(cursor)
-        cursor.execute(f"SELECT distinct f.filme_id, f.titulo_primario from titulo as t, filme as f WHERE t.filme_id=f.filme_id AND MATCH (titulo) AGAINST ('{query}')")
+        cursor.execute(f"SELECT distinct f.filme_id, f.titulo_primario, lancamento, url from titulo as t, filme as f, capa as c WHERE t.filme_id=f.filme_id AND f.filme_id=c.filme_id AND MATCH (titulo) AGAINST ('{query}')")
         filmes = dictfetchall(cursor)
         return render(request, "imdb_filmes/pesquisa.html", {
         "pessoas": pessoas,

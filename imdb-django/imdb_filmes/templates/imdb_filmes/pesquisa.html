@@ -13,7 +13,7 @@
     {% for pessoa in pessoas %}
     <ul>
     <div class="card">
-        <img  src="https:" alt="card" id="image">
+        <img  src="{{ pessoa.url }}" alt="card" id="image">
         <div class="fraseCard">
             <a href="{% url 'pessoa' pessoa.pessoa_id %}">{{pessoa.nome}}</a>
         </div>
@@ -27,7 +27,7 @@
     {% for filme in filmes %}
     <ul>
         <div class="card">
-            <img  src="https" alt="card" id="image">
+            <img  src="{{ filme.url }}" alt="card" id="image">
             <div class="fraseCard">
                 <a href="{% url 'filme' filme.filme_id %}">{{filme.titulo_primario}}</a>
             </div>
