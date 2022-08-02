@@ -348,7 +348,8 @@ tbody strong{
         flex-direction: row;
         /* background-color:#e8dc91; */
         justify-content: space-around;
-        margin-top: 100px;
+        margin-top: 60px;
+        margin-bottom: 20px;
         align-items: center;
         color: #f3ce13;
     }
