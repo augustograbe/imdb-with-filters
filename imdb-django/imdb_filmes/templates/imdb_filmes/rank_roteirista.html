@@ -48,7 +48,7 @@
     <div id="filtros">
         <form method="get">
             <h1><img id="filtro_icon" src="{% static 'imdb_filmes/filtro.png' %}" width="35" height="42">Filtros</h1>
-            <p>Quantidade de filmes dirigidos >=<input type="number" id=""  value="{{ filtros.qtd_dirigidos }}" name="qtd_dirigidos"></p>
+            <p>Quantidade de filmes escritos >=<input type="number" id=""  value="{{ filtros.qtd_dirigidos }}" name="qtd_dirigidos"></p>
             <p>Quantidade de votos dos filmes:<input type="number" id=""  value="{{ filtros.votos }}" name="qtd_votos"></p>
             <input type="checkbox" id="" name="vivo" value="1" {{ filtros.vivo }}>
             <label for="vivo"> Está vivo</label>
@@ -61,7 +61,7 @@
                 <option value="qtd_filmes">Quantidade de filmes</option>
             </select>
             <br><br>
-            <input class="botao_filtro" type="submit" value="Filtrar diretores">
+            <input class="botao_filtro" type="submit" value="Filtrar roteiristas">
         </form>
     </div>
 </div>
