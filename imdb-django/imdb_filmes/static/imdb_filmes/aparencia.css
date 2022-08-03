@@ -136,6 +136,7 @@ nav input {
     position: relative;
 }
 h1 {
+    margin-left: 10px;
     margin-top: 30px;
     color: #424242;
     font: 24px Arial,sans-serif;
