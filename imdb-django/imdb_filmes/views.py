@@ -304,7 +304,7 @@ def filme(request, filme_id):
             
     
     
-    cursor.execute(f"select f.filme_id, titulo_primario, titulo_original, lancamento, nota_media, num_votos, url FROM filme as f, avaliacao as a, capa as c WHERE f.filme_Id=a.filme_id AND f.filme_id=c.filme_id AND f.filme_id='{filme_id}'")
+    cursor.execute(f"select f.filme_id, titulo_primario, titulo_original, lancamento, nota_media, num_votos, url, tempo FROM filme as f, avaliacao as a, capa as c WHERE f.filme_Id=a.filme_id AND f.filme_id=c.filme_id AND f.filme_id='{filme_id}'")
     filme = dictfetchall(cursor)
     cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, roterista WHERE pessoa.pessoa_id=roterista.pessoa_id AND filme_id='{filme_id}'")
     roteiristas = dictfetchall(cursor)
