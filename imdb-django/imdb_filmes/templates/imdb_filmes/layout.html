@@ -6,6 +6,7 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link href="{% static 'imdb_filmes/aparencia.css' %}" rel="stylesheet">
+        <link href="{% static 'imdb_filmes/login.css' %}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
     </head>
     
@@ -23,13 +24,56 @@
                     <button type="submit"><img src="{% static 'imdb_filmes/lupa.svg' %}"></button>
             </div>
             </form>
-            <div id="wlist"><img src="{% static 'imdb_filmes/favorito.svg' %}" id="wl-img">Favoritos</div>
-            <div id="sin">Sign In</div>
+            <a href="{% url 'favoritos' %}" id="menu"><img src="{% static 'imdb_filmes/favorito.svg' %}" id="wl-img">Favoritos</a>
+
+            {% if usuario is None %}
+             <button onclick="document.getElementById('id01').style.display='block'" id="sin">Login</button>
+            {% else %}
+            <div class="dropdown">
+                <button>{{ usuario }}</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'logout' %}">Sair</a>
+                </div>
+            </div>
+            {% endif %}
+            
+            
         </nav>
+
+
+        <div id="id01" class="modal">
+  
+            <form class="modal-content animate" action="{% url 'login' %}" method="post">
+              <div class="container">
+                {% csrf_token %}
+                <label for="uname"><b>Usuário</b></label>
+                <input type="text" placeholder="Digite usuário" name="username" required> 
+                <label for="psw"><b>Senha</b></label>
+                <input type="password" placeholder="Digite a senha" name="password" required> 
+                <button type="submit" formaction="{% url 'registrar' %}">Registrar</button>
+                <button type="submit">Login</button>
+              </div>
+            </form>
+        </div>
+    
         <div id="corpo">
             {% block body %}
             {% endblock %}
         </div>
+
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('id01');     
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+  
+          
     </body>
 </html>
 

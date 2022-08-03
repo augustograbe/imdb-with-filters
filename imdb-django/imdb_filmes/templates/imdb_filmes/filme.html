@@ -10,13 +10,17 @@
     <div class="filme-background">
         <div class="filme-titulo">
             <div class="filme-titulo-image">
-                <img src="{{ capa.0.url }}">
+                <img src="{{ filme.0.url }}">
             </div>
 
             <div class="filme-titulo-infos">
+                <form action="" method="get">
                 <div class="favoritar">
-                    <img src="{% static 'imdb_filmes/coracao-fe.png' %}" alt='favoritar' id='favoritar'>
+                    <input type="hideen" name="pressionado" value="1">
+                    <input type="submit" id="heart">
+                    <label for="heart" id="{{coracao}}">&#9829</label>
                 </div>
+                </form>
                 <div class="filme-titulo-primario">
                     <p>{{ filme.0.titulo_primario}}</p> 
                 </div>
@@ -36,13 +40,13 @@
                                 <img src="{% static 'imdb_filmes/star.png' %}" alt='star' id='star'>
                             </div>
                             <div class="avaliacao-valores" >
-                                <div class="avaliacao-valores-nota"><p><b>{{ avaliacao.0.nota_media}}</b>/10 </p> </div>
-                                <div class="avaliacao-valores-votos"><p>{{ avaliacao.0.num_votos}}</p></div>
+                                <div class="avaliacao-valores-nota"><p><b>{{ filme.0.nota_media}}</b>/10 </p> </div>
+                                <div class="avaliacao-valores-votos"><p>{{ filme.0.num_votos}}</p></div>
                             </div>
                         </div>
                     </div>
                     <div class="botao-ver-imdb">
-                        <a href="https://www.imdb.com/title/{{ filme.0.filme_id }}">
+                        <a href="https://www.imdb.com/title/{{ filme.0.filme_id }}" target="_blank">
                             <img src="{% static 'imdb_filmes/imdb-logo.png' %}" alt='logo' id='logo'>
                         </a>
                     </div>

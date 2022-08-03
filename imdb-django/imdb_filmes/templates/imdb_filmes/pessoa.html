@@ -27,17 +27,42 @@
                     </div>
                 </div>
                 <div class="pessoa-info-data">
-                    <div class="pessoa-info-data-img">
-                        <img src="{% static 'imdb_filmes/cruz-branca.png' %}" alt='icon' id='icon'>
-                    </div>
-                    <div class="pessoa-info-data-text">
-                        <p>{{ pessoa.0.morte}}</p> 
-                    </div>
+                    {% if pessoa.0.morte != none %}
+                        <div class="pessoa-info-data-img">
+                            <img src="{% static 'imdb_filmes/cruz-branca.png' %}" alt='icon' id='icon'>
+                        </div>
+                        <div class="pessoa-info-data-text">
+                            <p>{{ pessoa.0.morte}}</p> 
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-
+            <div class="botao-ver-imdb">
+                <a href="https://www.imdb.com/name/{{ pessoa.0.pessoa_id }}" target="_blank">
+                    <img src="{% static 'imdb_filmes/imdb-logo.png' %}" alt='logo' id='logo'>
+                </a>
+            </div>
+            <ul>
+                {% for trabalho in trabalhos %}
+                <li style="color:white">
+                        {{ trabalho.profissao }}
+                </li>
+                {% endfor %}
+            </ul>
             </div>
         </div>
+    </div>
+    <h1>Conhecido por:</h1>
+    <ul>
+        {% for filme in filmes %}
+        <li>
+            <a href="{% url 'filme' filme.filme_id %}" class="filme-corpo-links">
+                {{ filme.titulo_primario }} ({{ filme.lancamento}})
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    
     </div>
 </div>
 {% endblock %}

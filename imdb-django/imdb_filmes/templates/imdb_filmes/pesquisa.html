@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block body %}
+{% if pessoas.0 is not None %}
 <h1>Pessoas:</h1>
 
 <div class="cards">
@@ -21,7 +22,9 @@
     </ul>
     {% endfor %}
 </div>
+{% endif %}
 
+{% if filmes.0 is not None %}
 <h1>Filmes:</h1>
 <div class="cards">
     {% for filme in filmes %}
@@ -33,5 +36,10 @@
             </div>
         </div>
     </ul>
-{% endfor %}
+    {% endfor %}
+{% endif %}
+{% if pessoas.0 is None and filmes.0 is None %}
+    <p>Nenhum resultado</p>
+{% endif %}
+
 {% endblock %}

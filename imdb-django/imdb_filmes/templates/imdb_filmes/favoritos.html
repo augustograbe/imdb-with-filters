@@ -1,0 +1,34 @@
+{% extends "imdb_filmes/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Favoritos
+{% endblock %}
+
+{% block body %}
+{% if usuario is None %}
+    <br><br><br>
+    <h4>Faça login para ver os seus favoritos</h4>
+{% else %}
+    <h1>Favoritos</h1>
+    <table class="table_rank">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Título</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for filme in filmes %}
+            <tr>
+                <td><img src="{{ filme.url }}" width="45" height="67"></td>
+                <td id="td_titulo">
+                    <a href="{% url 'filme' filme.filme_id %}">{{ filme.titulo_primario }}</a> ({{ filme.lancamento }})
+                </td>      
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

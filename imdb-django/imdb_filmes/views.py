@@ -1,6 +1,10 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db import connection
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import hashlib
+
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
@@ -37,8 +41,18 @@ def rank_dict(dict):
     return dict
 
 
+def get_hash(string):
+    string = string.encode()
+    h = hashlib.sha256(string)
+    h = h.hexdigest()
+    return h
+
+
+usuario_atual = None
 # --------------Paginas-----------------
 def index(request):
+    global usuario_atual
+    print(f"USUARIO INDEX {usuario_atual}")
     filtros = {}
     query_from = request.GET.get("fromInput","")
     if query_from == "": query_from = "1911"
@@ -142,7 +156,7 @@ def index(request):
         filtros['faroeste'] = "checked"
         selecao += (",'Western'")
     
-    selecao += (") ORDER BY nota_media  desc limit 250")
+    selecao += (") ORDER BY nota_media  desc limit 1000")
 
     cursor = connection.cursor()
     cursor.execute(selecao)
@@ -150,7 +164,8 @@ def index(request):
     filmes = rank_dict(filmes)
     return render(request, "imdb_filmes/index.html",{
         "filmes": filmes,
-        "filtros": filtros
+        "filtros": filtros,
+        "usuario": usuario_atual
     })
 
 def rank_diretor(request):
@@ -187,7 +202,8 @@ def rank_diretor(request):
     diretores = rank_dict(diretores)
     return render(request, "imdb_filmes/rank_diretor.html",{
         "diretores": diretores,
-        "filtros": filtros
+        "filtros": filtros,
+        "usuario": usuario_atual
     })
 
 def rank_ator(request):
@@ -224,7 +240,8 @@ def rank_ator(request):
     diretores = rank_dict(diretores)
     return render(request, "imdb_filmes/rank_ator.html",{
         "diretores": diretores,
-        "filtros": filtros
+        "filtros": filtros,
+        "usuario": usuario_atual
     })
 
 def rank_roterista(request):
@@ -261,15 +278,34 @@ def rank_roterista(request):
     diretores = rank_dict(diretores)
     return render(request, "imdb_filmes/rank_roteirista.html",{
         "diretores": diretores,
-        "filtros": filtros
+        "filtros": filtros,
+        "usuario": usuario_atual
     })
 
 def filme(request, filme_id):
+    global usuario_atual
     cursor = connection.cursor()
-    cursor.execute(f"SELECT filme_id, titulo_primario, titulo_original, lancamento, tempo FROM filme WHERE filme_id='{filme_id}'")
+    cursor.execute("SET FOREIGN_KEY_CHECKS=0")
+    query = request.GET.get("pressionado","")
+    cursor.execute(f"SELECT filme_id FROM favorito WHERE usuario='{usuario_atual}' AND filme_id='{filme_id}'")
+    favorito=dictfetchall(cursor)
+    coracao = "branco"
+    if favorito != []:
+        coracao = "vermelho"
+    if query == "1":
+        if usuario_atual is None:
+            return HttpResponseRedirect(reverse('favoritos'))
+        if favorito == []:
+            cursor.execute(f"INSERT INTO favorito (filme_id, usuario) VALUES ('{filme_id}','{usuario_atual}')")
+            coracao = "vermelho"
+        else:
+            cursor.execute(f"DELETE FROM favorito WHERE usuario='{usuario_atual}' AND filme_id='{filme_id}'")
+            coracao = "branco"
+            
+    
+    
+    cursor.execute(f"select f.filme_id, titulo_primario, titulo_original, lancamento, nota_media, num_votos, url FROM filme as f, avaliacao as a, capa as c WHERE f.filme_Id=a.filme_id AND f.filme_id=c.filme_id AND f.filme_id='{filme_id}'")
     filme = dictfetchall(cursor)
-    cursor.execute(f"SELECT nota_media, num_votos FROM avaliacao WHERE filme_id='{filme_id}'")
-    avaliacao = dictfetchall(cursor)
     cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, roterista WHERE pessoa.pessoa_id=roterista.pessoa_id AND filme_id='{filme_id}'")
     roteiristas = dictfetchall(cursor)
     cursor.execute(f"SELECT pessoa.pessoa_id, nome FROM pessoa, diretor WHERE pessoa.pessoa_id=diretor.pessoa_id AND filme_id='{filme_id}'")
@@ -278,27 +314,33 @@ def filme(request, filme_id):
     atores = dictfetchall(cursor)
     cursor.execute(f"SELECT genero FROM genero WHERE filme_id='{filme_id}'")
     generos = dictfetchall(cursor)
-    cursor.execute(f"SELECT url FROM capa WHERE filme_id='{filme_id}'")
-    capa = dictfetchall(cursor)
+
     return render(request, "imdb_filmes/filme.html", {
         "filme": filme,
-        "avaliacao": avaliacao,
         "roteiristas": roteiristas,
         "diretores": diretores,
         "atores": atores,
         "generos": generos,
-        "capa": capa
+        "usuario": usuario_atual,
+        "coracao": coracao
     } )
 
 def pessoa(request, pessoa_id):
     cursor = connection.cursor()
-    cursor.execute(f"SELECT nome, nascimento, morte from pessoa WHERE pessoa_id='{pessoa_id}'")
+    cursor.execute(f"SELECT pessoa_id, nome, nascimento, morte from pessoa WHERE pessoa_id='{pessoa_id}'")
     pessoa = dictfetchall(cursor)
     cursor.execute(f"SELECT url from foto WHERE pessoa_id='{pessoa_id}'")
     foto = dictfetchall(cursor)
+    cursor.execute(f"select filme.filme_id, titulo_primario, lancamento from filme, conhecido_por WHERE filme.filme_id=conhecido_por.filme_id AND pessoa_id='{pessoa_id}'")
+    filmes = dictfetchall(cursor)
+    cursor.execute(f"select profissao from trabalhou_como WHERE pessoa_id='{pessoa_id}'")
+    trabalhos = dictfetchall(cursor)
     return render(request, "imdb_filmes/pessoa.html", {
         "pessoa": pessoa,
-        "foto": foto
+        "foto": foto,
+        "filmes": filmes,
+        "trabalhos": trabalhos,
+        "usuario": usuario_atual
     } )
 
 def pesquisa(request):
@@ -310,5 +352,46 @@ def pesquisa(request):
         filmes = dictfetchall(cursor)
         return render(request, "imdb_filmes/pesquisa.html", {
         "pessoas": pessoas,
-        "filmes": filmes
+        "filmes": filmes,
+        "usuario": usuario_atual
     } )
+
+def registrar(request):
+    global usuario_atual
+    username = request.POST['username']
+    password = request.POST['password']
+    cursor = connection.cursor()
+    cursor.execute(f"INSERT INTO usuario (usuario, senha) VALUES ('{username}', SHA2('{password}', 256))")
+    usuario_atual = username
+    print(f"USUARIO REGISTRADO {usuario_atual}")
+    return HttpResponseRedirect(reverse('favoritos'))
+
+def login(request):
+    global usuario_atual
+    username = request.POST['username']
+    password = request.POST['password']
+    password = get_hash(password)
+    print(f"senha:{password}")
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT senha FROM usuario WHERE usuario='{username}'")
+    senha=cursor.fetchall()
+    if senha[0][0] == password:
+        usuario_atual = username
+    return HttpResponseRedirect(reverse('favoritos'))
+
+def logout(request):
+    global usuario_atual
+    usuario_atual = None
+    return HttpResponseRedirect(reverse('index'))
+
+def favoritos(request):
+    global usuario_atual
+    filmes = ""
+    if usuario_atual is not None:
+        cursor = connection.cursor()
+        cursor.execute(f"select f.filme_id, titulo_primario, lancamento, url from favorito as t, filme as f, capa as c WHERE t.filme_id=f.filme_id AND f.filme_id= c.filme_id AND usuario='{usuario_atual}'")
+        filmes = dictfetchall(cursor)
+    return render(request, "imdb_filmes/favoritos.html", {
+    "usuario": usuario_atual,
+    "filmes": filmes
+} )
